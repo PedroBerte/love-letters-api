@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoveLettersApi", "LoveLettersApi\LoveLettersApi.csproj", "{D5FAE255-27A2-43C8-9130-74522345D4CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoveLetters.WebApi", "LoveLettersApi\LoveLetters.WebApi.csproj", "{D5FAE255-27A2-43C8-9130-74522345D4CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoveLetters.Service", "LoveLettersService\LoveLetters.Service.csproj", "{4A437699-038E-4018-9211-9F7F4CA79C6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoveLetters.Repository", "LoveLettersRepository\LoveLetters.Repository.csproj", "{0F9288B5-5779-4D4B-9661-E2A74DE011E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D5FAE255-27A2-43C8-9130-74522345D4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5FAE255-27A2-43C8-9130-74522345D4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5FAE255-27A2-43C8-9130-74522345D4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A437699-038E-4018-9211-9F7F4CA79C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A437699-038E-4018-9211-9F7F4CA79C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A437699-038E-4018-9211-9F7F4CA79C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A437699-038E-4018-9211-9F7F4CA79C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
