@@ -1,6 +1,7 @@
 ﻿using LoveLetters.Repository.Context;
 using LoveLetters.Repository.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace LoveLetters.Repository.Repositories
 {
@@ -14,7 +15,14 @@ namespace LoveLetters.Repository.Repositories
 
         public async Task<users> getUserByEmail(string email)
         {
-            return await context.users.FirstOrDefaultAsync(x => x.email == email);   
+            try
+            {
+                return await context.users.FirstOrDefaultAsync(x => x.email == email);
+            }
+            catch (DbException ex)
+            {
+                throw ex;
+            }
         }
     }
 }
