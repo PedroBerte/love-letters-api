@@ -1,4 +1,5 @@
-﻿using LoveLetters.Service.Responses;
+﻿using LoveLetters.Repository.Context;
+using LoveLetters.Service.Responses;
 using LoveLetters.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,22 +17,23 @@ namespace LoveLetters.WebApi.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<ActionResult> Login(string email, string password)
+        public async Task<ActionResult> LoginUser(string email, string password)
         {
             try
             {
                 return Ok(await authService.LoginUser(email, password));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest(new DefaultResponse<object>()
-                {
-                    Code = 500,
-                    Message = "Erro desconhecido",
-                    Success = true
-                });
+                return BadRequest(ex.Message);
             }
         }
 
+        [HttpPost]
+        [Route("Register")]
+        public async Task<ActionResult> RegisterUser([FromBody] users user)
+        {
+            return Ok();
+        }
     }
 }

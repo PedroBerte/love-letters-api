@@ -1,4 +1,5 @@
-﻿using LoveLetters.Repository.Repositories.Interfaces;
+﻿using LoveLetters.Repository.Context;
+using LoveLetters.Repository.Repositories.Interfaces;
 using LoveLetters.Service.Helpers;
 using LoveLetters.Service.Responses;
 using LoveLetters.Service.Services.Interfaces;
@@ -56,13 +57,27 @@ namespace LoveLetters.Service.Services
             }
             catch (Exception ex)
             {
-                return new DefaultResponse<string>()
-                {
-                    Code = 500,
-                    Errors = new List<string>() { ex.Message },
-                    Message = "Erro desconhecido no serviço de Login.",
-                    Success = false,
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public async Task<DefaultResponse<bool>> RegisterUser(users user)
+        {
+            try
+            {
+                var guid = Guid.NewGuid();
+
+                user.guid = guid.ToString();
+                return new DefaultResponse<bool> 
+                { 
+                    Code= 200,
+                    Data = true,
+                    Success = true,
                 };
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
