@@ -16,7 +16,7 @@ namespace LoveLetters.Service.Helpers
             this.secret = secret;
         }
 
-        public string GenerateUserToken(users user)
+        public string GenerateUserToken(Users user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -30,15 +30,15 @@ namespace LoveLetters.Service.Helpers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private Claim[] getUserClaims(users user)
+        private Claim[] getUserClaims(Users user)
         {
             var claims = new Claim[]
             {
-                new Claim("uid", user.uid),
+                new Claim("uid", user.guid),
                 new Claim("name", user.name),
                 new Claim("email", user.email),
                 new Claim("profilePhoto", user?.profilePhoto ?? ""),
-                new Claim("partnerUid", user ?.partnerUID ?? ""),
+                new Claim("partnerUid", user ?.partnerGuid ?? ""),
                 new Claim("partnerName", user?.partnerName ?? ""),
                 new Claim("havePartner", user.havePartner ? "1" : "0")
             };

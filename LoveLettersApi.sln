@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoveLetters.Service", "Love
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoveLetters.Repository", "LoveLettersRepository\LoveLetters.Repository.csproj", "{0F9288B5-5779-4D4B-9661-E2A74DE011E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoveLetters.Test", "LoveLetters.Test\LoveLetters.Test.csproj", "{1DD1FA8F-0BC7-44A3-91D1-0980B9817E28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F9288B5-5779-4D4B-9661-E2A74DE011E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD1FA8F-0BC7-44A3-91D1-0980B9817E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD1FA8F-0BC7-44A3-91D1-0980B9817E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD1FA8F-0BC7-44A3-91D1-0980B9817E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD1FA8F-0BC7-44A3-91D1-0980B9817E28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

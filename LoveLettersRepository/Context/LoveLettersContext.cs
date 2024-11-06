@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoveLetters.Repository.Context
 {
@@ -13,52 +8,52 @@ namespace LoveLetters.Repository.Context
         : base(options)
         {
         }
-        public DbSet<users> users { get; set; }
-        public DbSet<invites> invites { get; set; }
-        public DbSet<relationship> relationship { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Invites> Invites { get; set; }
+        public DbSet<Relationship> Relationship { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<users>()
-            .HasKey(u => u.uid);
+            modelBuilder.Entity<Users>()
+            .HasKey(u => u.guid);
 
-            modelBuilder.Entity<relationship>()
+            modelBuilder.Entity<Relationship>()
             .HasKey(u => u.id);
 
-            modelBuilder.Entity<invites>()
+            modelBuilder.Entity<Invites>()
             .HasKey(u => u.id);
         }
     }
 
-    public class users
+    public class Users
     {
-        public string uid { get; set; }
+        public string guid { get; set; }
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public string? profilePhoto { get; set; }
-        public string? partnerUID { get; set; }
+        public string? partnerGuid { get; set; }
         public string? partnerName { get; set; }
         public bool havePartner { get; set; }
     }
 
 
-    public class invites
+    public class Invites
     {
         public int id { get; set; }
         public bool inviteAccepted { get; set; }
         public DateTime inviteDate { get; set; }
-        public string uidInvited { get; set; }
-        public string uidInviter { get; set; }
+        public string guidInvited { get; set; }
+        public string guidInviter { get; set; }
     }
 
-    public class relationship
+    public class Relationship
     {
         public int id { get; set; }
-        public string partnerUid1 { get; set; }
-        public string partnerUid2 { get; set; }
+        public string partnerGuid1 { get; set; }
+        public string partnerGuid2 { get; set; }
         public string status { get; set; }
         public DateTime startDate { get; set; }
         public DateTime? endDate { get; set; }

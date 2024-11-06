@@ -4,6 +4,7 @@ namespace LoveLetters.Repository.Repositories.Interfaces
 {
     public interface IAuthRepository
     {
-        Task<users> getUserByEmail(string email);
+        Task<Users> GetUserByEmail(string email);
+        Task InsertUser(Users user);
     }
 }

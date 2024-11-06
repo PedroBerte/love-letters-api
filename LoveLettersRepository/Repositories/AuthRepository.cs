@@ -13,15 +13,27 @@ namespace LoveLetters.Repository.Repositories
             this.context = context;
         }
 
-        public async Task<users> getUserByEmail(string email)
+        public async Task<Users> GetUserByEmail(string email)
         {
             try
             {
-                return await context.users.FirstOrDefaultAsync(x => x.email == email);
+                return await context.Users.FirstOrDefaultAsync(x => x.email == email);
             }
-            catch (DbException ex)
+            catch (DbException)
             {
-                throw ex;
+                throw;
+            }
+        }
+
+        public async Task InsertUser(Users user)
+        {
+            try
+            {
+                await context.Users.AddAsync(user);
+            }
+            catch (DbException)
+            {
+                throw;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using LoveLetters.Repository.Repositories.Interfaces;
+﻿using LoveLetters.Repository.Context;
+using LoveLetters.Repository.Repositories.Interfaces;
 using LoveLetters.Service.Helpers;
 using LoveLetters.Service.Responses;
 using LoveLetters.Service.Services.Interfaces;
@@ -20,7 +21,7 @@ namespace LoveLetters.Service.Services
         {
             try
             {
-                var user = await authRepository.getUserByEmail(email);
+                var user = await authRepository.GetUserByEmail(email);
 
                 if (user == null)
                 {
@@ -56,13 +57,45 @@ namespace LoveLetters.Service.Services
             }
             catch (Exception ex)
             {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public async Task<DefaultResponse<string>> RegisterUser(Users user)
+        {
+            try
+            {
+                var hasUser = await authRepository.GetUserByEmail(user.email);
+
+                if (hasUser != null)
+                {
+                    return new DefaultResponse<string>
+                    {
+                        Code = 403,
+                        Message = "E-Mail já cadastrado no sistema.",
+                        Success = false
+                    };
+                }
+
+                var guid = Guid.NewGuid();
+                user.guid = guid.ToString();
+
+                var hashedPassword = new PasswordHelper(configuration["Salt"]).HashPassword(user.password);
+                user.password = hashedPassword;
+
+                await authRepository.InsertUser(user);
+
                 return new DefaultResponse<string>()
                 {
-                    Code = 500,
-                    Errors = new List<string>() { ex.Message },
-                    Message = "Erro desconhecido no serviço de Login.",
-                    Success = false,
+                    Code = 200,
+                    Data = guid.ToString(),
+                    Success = true,
+                    Message = "Login efetuado com sucesso!"
                 };
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.ToString());
             }
         }
     }

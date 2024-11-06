@@ -27,7 +27,7 @@ namespace LoveLetters.WebApi.Controllers
                 return BadRequest(new DefaultResponse<object>()
                 {
                     Code = 500,
-                    Message = "Erro desconhecido",
+                    Message = "Erro desconhecido no serviço de Login.",
                     Success = true
                 });
             }
