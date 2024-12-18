@@ -17,15 +17,15 @@ namespace LoveLetters.Service.Services
             this.configuration = configuration;
         }
 
-        public async Task<DefaultResponse<string>> LoginUser(string email, string password)
+        public async Task<DefaultResponse<Users>> LoginUser(string email, string password)
         {
             try
             {
                 var user = await authRepository.GetUserByEmail(email);
 
-                if (user == null)
+                if (user is null)
                 {
-                    return new DefaultResponse<string>()
+                    return new DefaultResponse<Users>()
                     {
                         Code = 403,
                         Message = "Email e/ou senha incorreta!",
@@ -37,17 +37,20 @@ namespace LoveLetters.Service.Services
 
                 if (passwordHashed == user.password)
                 {
-                    return new DefaultResponse<string>()
+                    var jwtToken = new JwtTokenService(configuration["SecretKey"]).GenerateUserToken(user);
+                    user.jwtToken = jwtToken;
+
+                    return new DefaultResponse<Users>()
                     {
                         Code = 200,
-                        Data = new JwtTokenService(configuration["SecretKey"]).GenerateUserToken(user),
+                        Data = user,
                         Success = true,
                         Message = "Login efetuado com sucesso!"
                     };
                 }
                 else
                 {
-                    return new DefaultResponse<string>()
+                    return new DefaultResponse<Users>()
                     {
                         Code = 403,
                         Message = "Email e/ou senha incorreta!",
@@ -61,7 +64,7 @@ namespace LoveLetters.Service.Services
             }
         }
 
-        public async Task<DefaultResponse<string>> RegisterUser(Users user)
+        public async Task<DefaultResponse<Users>> RegisterUser(Users user)
         {
             try
             {
@@ -69,7 +72,7 @@ namespace LoveLetters.Service.Services
 
                 if (hasUser != null)
                 {
-                    return new DefaultResponse<string>
+                    return new DefaultResponse<Users>
                     {
                         Code = 403,
                         Message = "E-Mail já cadastrado no sistema.",
@@ -78,19 +81,21 @@ namespace LoveLetters.Service.Services
                 }
 
                 var guid = Guid.NewGuid();
-                user.guid = guid.ToString();
-
                 var hashedPassword = new PasswordHelper(configuration["Salt"]).HashPassword(user.password);
+                var jwtToken = new JwtTokenService(configuration["SecretKey"]).GenerateUserToken(user);
+
+                user.guid = guid.ToString();
                 user.password = hashedPassword;
+                user.jwtToken = jwtToken;
 
                 await authRepository.InsertUser(user);
 
-                return new DefaultResponse<string>()
+                return new DefaultResponse<Users>()
                 {
                     Code = 200,
-                    Data = guid.ToString(),
+                    Data = user,
                     Success = true,
-                    Message = "Login efetuado com sucesso!"
+                    Message = "Registro efetuado com sucesso!"
                 };
             }
             catch (Exception ex)

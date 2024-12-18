@@ -1,30 +1,41 @@
-create table users(
-	uid varchar(28) PRIMARY KEY NOT NULL,
-    name varchar(60) NOT NULL,
-    email varchar(60) NOT NULL,
-    password varchar(60) NOT NULL,
-    profilePhoto mediumtext NULL,
-    partnerUID varchar(28) NULL,
-    partnerName varchar(60) NULL,
-    havePartner boolean NOT NULL
+-- Cria o banco de dados, se não existir
+CREATE DATABASE IF NOT EXISTS lovelettersdb;
+
+-- Usa o banco de dados criado
+USE lovelettersdb;
+
+-- Cria a tabela users se não existir
+CREATE TABLE IF NOT EXISTS users (
+    guid VARCHAR(28) PRIMARY KEY NOT NULL,
+    name VARCHAR(60) NOT NULL,
+    email VARCHAR(60) NOT NULL,
+    password VARCHAR(60) NOT NULL,
+    profilePhoto MEDIUMTEXT NULL,
+    partnerGuidpartnerUIDusersusers VARCHAR(28) NULL,
+    partnerName VARCHAR(60) NULL,
+    havePartner BOOLEAN NOT NULL
 );
 
-create table invites(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    inviteAccepted boolean NOT NULL,
-    inviteDate datetime NOT NULL,
-    uidInvited varchar(28) NOT NULL,
-    uidInviter varchar(28) NOT NULL,
-    CONSTRAINT FK_User_Invited FOREIGN KEY (uidInvited) REFERENCES users(UID),
-    CONSTRAINT FK_User_Inviter FOREIGN KEY (uidInviter) REFERENCES users(UID)
+-- Cria a tabela invites se não existir
+CREATE TABLE IF NOT EXISTS invites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    inviteAccepted BOOLEAN NOT NULL,
+    inviteDate DATETIME NOT NULL,
+    guidInvited VARCHAR(28) NOT NULL,
+    guidInviter VARCHAR(28) NOT NULL,
+    CONSTRAINT FK_User_Invited FOREIGN KEY (guidInvited) REFERENCES users(guid),
+    CONSTRAINT FK_User_Inviter FOREIGN KEY (guidInviter) REFERENCES users(guid)
 );
 
-create table relationship(
-	partnerUid1 varchar(28) NOT NULL,
-    partnerUid2 varchar(28) NOT NULL,
-    status varchar(1) NOT NULL,
-    startDate datetime NOT NULL,
-    endDate datetime NULL,
-    CONSTRAINT FK_partner1 FOREIGN KEY (partnerUid1) REFERENCES users(UID),
-    CONSTRAINT FK_partner2 FOREIGN KEY (partnerUid2) REFERENCES users(UID)
+-- Cria a tabela relationship se não existir
+CREATE TABLE IF NOT EXISTS relationship (
+    partnerGuid1 VARCHAR(28) NOT NULL,
+    partnerGuid2 VARCHAR(28) NOT NULL,
+    status VARCHAR(1) NOT NULL,
+    startDate DATETIME NOT NULL,
+    endDate DATETIME NULL,
+    CONSTRAINT FK_partner1 FOREIGN KEY (partnerGuid1) REFERENCES users(guid),
+    CONSTRAINT FK_partner2 FOREIGN KEY (partnerGuid2) REFERENCES users(guid)
 );
+
+

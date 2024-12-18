@@ -29,16 +29,30 @@ namespace LoveLetters.WebApi.Controllers
                 {
                     Code = 500,
                     Message = "Erro desconhecido no serviço de Login.",
-                    Success = true
+                    Data = ex,
+                    Success = false
                 });
             }
         }
 
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult> RegisterUser([FromBody] users user)
+        public async Task<ActionResult> RegisterUser([FromBody] Users user)
         {
-            return Ok();
+            try
+            {
+                return Ok(await authService.RegisterUser(user));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new DefaultResponse<object>()
+                {
+                    Code = 500,
+                    Message = "Erro desconhecido no serviço de Registro.",
+                    Data = ex,
+                    Success = false
+                });
+            }
         }
     }
 }
