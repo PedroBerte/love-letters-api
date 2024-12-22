@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
 
@@ -15,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\" />
+    <Folder Include="DTO\Requests\" />
   </ItemGroup>
 
 </Project>

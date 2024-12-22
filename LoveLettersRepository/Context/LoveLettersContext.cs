@@ -38,8 +38,6 @@ namespace LoveLetters.Repository.Context
         public string? partnerGuid { get; set; }
         public string? partnerName { get; set; }
         public bool havePartner { get; set; }
-        [NotMapped]
-        public string? jwtToken { get; set; }
     }
 
 

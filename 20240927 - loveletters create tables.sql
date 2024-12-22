@@ -6,15 +6,16 @@ USE lovelettersdb;
 
 -- Cria a tabela users se não existir
 CREATE TABLE IF NOT EXISTS users (
-    guid VARCHAR(28) PRIMARY KEY NOT NULL,
+    guid VARCHAR(36) PRIMARY KEY NOT NULL,
     name VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL,
     password VARCHAR(60) NOT NULL,
     profilePhoto MEDIUMTEXT NULL,
-    partnerGuidpartnerUIDusersusers VARCHAR(28) NULL,
+    partnerGuid VARCHAR(28) NULL,
     partnerName VARCHAR(60) NULL,
     havePartner BOOLEAN NOT NULL
 );
+
 
 -- Cria a tabela invites se não existir
 CREATE TABLE IF NOT EXISTS invites (
@@ -37,5 +38,7 @@ CREATE TABLE IF NOT EXISTS relationship (
     CONSTRAINT FK_partner1 FOREIGN KEY (partnerGuid1) REFERENCES users(guid),
     CONSTRAINT FK_partner2 FOREIGN KEY (partnerGuid2) REFERENCES users(guid)
 );
+
+
 
 

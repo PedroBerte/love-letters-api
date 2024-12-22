@@ -30,6 +30,7 @@ namespace LoveLetters.Repository.Repositories
             try
             {
                 await context.Users.AddAsync(user);
+                await context.SaveChangesAsync();
             }
             catch (DbException)
             {

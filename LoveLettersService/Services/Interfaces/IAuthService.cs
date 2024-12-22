@@ -1,11 +1,12 @@
 ﻿using LoveLetters.Repository.Context;
-using LoveLetters.Service.Responses;
+using LoveLetters.Service.DTO;
+using LoveLetters.Service.DTO.Responses;
 
 namespace LoveLetters.Service.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<DefaultResponse<Users>> LoginUser(string email, string password);
-        Task<DefaultResponse<Users>> RegisterUser(Users user);
+        Task<DefaultResponse<UsersDTO>> LoginUser(string email, string password);
+        Task<DefaultResponse<UsersDTO>> RegisterUser(UsersDTO user);
     }
 }

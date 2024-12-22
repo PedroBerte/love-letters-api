@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoveLetters.Service.Responses
+namespace LoveLetters.Service.DTO.Responses
 {
     public class DefaultResponse<T>
     {

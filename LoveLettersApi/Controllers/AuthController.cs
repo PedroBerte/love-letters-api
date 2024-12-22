@@ -1,5 +1,6 @@
 ﻿using LoveLetters.Repository.Context;
-using LoveLetters.Service.Responses;
+using LoveLetters.Service.DTO;
+using LoveLetters.Service.DTO.Responses;
 using LoveLetters.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace LoveLetters.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("Login")]
+        [Route("Login/{email}/{password}")]
         public async Task<ActionResult> LoginUser(string email, string password)
         {
             try
@@ -37,7 +38,7 @@ namespace LoveLetters.WebApi.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult> RegisterUser([FromBody] Users user)
+        public async Task<ActionResult> RegisterUser([FromBody] UsersDTO user)
         {
             try
             {

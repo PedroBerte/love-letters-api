@@ -1,7 +1,9 @@
-﻿using LoveLetters.Repository.Context;
+﻿using AutoMapper;
+using LoveLetters.Repository.Context;
 using LoveLetters.Repository.Repositories.Interfaces;
+using LoveLetters.Service.DTO;
+using LoveLetters.Service.DTO.Responses;
 using LoveLetters.Service.Helpers;
-using LoveLetters.Service.Responses;
 using LoveLetters.Service.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 
@@ -11,21 +13,23 @@ namespace LoveLetters.Service.Services
     {
         private readonly IAuthRepository authRepository;
         private readonly IConfiguration configuration;
-        public AuthService(IAuthRepository authRepository, IConfiguration configuration)
+        private readonly IMapper mapper;
+        public AuthService(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper)
         {
             this.authRepository = authRepository;
             this.configuration = configuration;
+            this.mapper = mapper;
         }
 
-        public async Task<DefaultResponse<Users>> LoginUser(string email, string password)
+        public async Task<DefaultResponse<UsersDTO>> LoginUser(string email, string password)
         {
             try
             {
-                var user = await authRepository.GetUserByEmail(email);
+                var user = mapper.Map<UsersDTO>(await authRepository.GetUserByEmail(email));
 
                 if (user is null)
                 {
-                    return new DefaultResponse<Users>()
+                    return new DefaultResponse<UsersDTO>()
                     {
                         Code = 403,
                         Message = "Email e/ou senha incorreta!",
@@ -40,7 +44,7 @@ namespace LoveLetters.Service.Services
                     var jwtToken = new JwtTokenService(configuration["SecretKey"]).GenerateUserToken(user);
                     user.jwtToken = jwtToken;
 
-                    return new DefaultResponse<Users>()
+                    return new DefaultResponse<UsersDTO>()
                     {
                         Code = 200,
                         Data = user,
@@ -50,7 +54,7 @@ namespace LoveLetters.Service.Services
                 }
                 else
                 {
-                    return new DefaultResponse<Users>()
+                    return new DefaultResponse<UsersDTO>()
                     {
                         Code = 403,
                         Message = "Email e/ou senha incorreta!",
@@ -64,15 +68,15 @@ namespace LoveLetters.Service.Services
             }
         }
 
-        public async Task<DefaultResponse<Users>> RegisterUser(Users user)
+        public async Task<DefaultResponse<UsersDTO>> RegisterUser(UsersDTO user)
         {
             try
             {
-                var hasUser = await authRepository.GetUserByEmail(user.email);
+                var possibleUser = mapper.Map<UsersDTO>(await authRepository.GetUserByEmail(user.email));
 
-                if (hasUser != null)
+                if (possibleUser != null)
                 {
-                    return new DefaultResponse<Users>
+                    return new DefaultResponse<UsersDTO>
                     {
                         Code = 403,
                         Message = "E-Mail já cadastrado no sistema.",
@@ -88,9 +92,9 @@ namespace LoveLetters.Service.Services
                 user.password = hashedPassword;
                 user.jwtToken = jwtToken;
 
-                await authRepository.InsertUser(user);
+                await authRepository.InsertUser(mapper.Map<Users>(user));
 
-                return new DefaultResponse<Users>()
+                return new DefaultResponse<UsersDTO>()
                 {
                     Code = 200,
                     Data = user,

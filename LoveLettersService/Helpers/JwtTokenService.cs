@@ -1,5 +1,4 @@
-﻿using LoveLetters.Repository.Context;
-using Microsoft.Extensions.Configuration;
+﻿using LoveLetters.Service.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,7 +15,7 @@ namespace LoveLetters.Service.Helpers
             this.secret = secret;
         }
 
-        public string GenerateUserToken(Users user)
+        public string GenerateUserToken(UsersDTO user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -30,7 +29,7 @@ namespace LoveLetters.Service.Helpers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private Claim[] getUserClaims(Users user)
+        private Claim[] getUserClaims(UsersDTO user)
         {
             var claims = new Claim[]
             {

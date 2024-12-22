@@ -1,6 +1,7 @@
 using LoveLetters.Repository.Context;
 using LoveLetters.Repository.Repositories;
 using LoveLetters.Repository.Repositories.Interfaces;
+using LoveLetters.Service.Profiles;
 using LoveLetters.Service.Services;
 using LoveLetters.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +23,15 @@ builder.Services.AddDbContext<LoveLettersContext>(options =>
             )
         );
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+#region services
 builder.Services.AddScoped<IAuthService, AuthService>();
+#endregion
 
-
+#region repositories
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+#endregion
 
 var app = builder.Build();
 
@@ -38,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
