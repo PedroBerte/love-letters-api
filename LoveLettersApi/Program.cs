@@ -26,14 +26,33 @@ builder.Services.AddDbContext<LoveLettersContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 #region services
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 #endregion
 
 #region repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 #endregion
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(System.Net.IPAddress.Any, 5253); // Porta 5000
+    options.Listen(System.Net.IPAddress.Any, 7220, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
 var app = builder.Build();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+
+    // Detecta automaticamente o host atual (incluindo o ngrok)
+    c.RoutePrefix = string.Empty; // Para que o Swagger esteja acessível na raiz
+});
 
 app.UseCors(policy =>
     policy.AllowAnyOrigin()
@@ -47,7 +66,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
