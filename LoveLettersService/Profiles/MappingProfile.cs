@@ -15,6 +15,9 @@ namespace LoveLetters.Service.Profiles
         {
             CreateMap<Users, UsersDTO>();
             CreateMap<UsersDTO, Users>();
+
+            CreateMap<Invites, InvitesDTO>();
+            CreateMap<InvitesDTO, Invites>();
         }
     }
 }

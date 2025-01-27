@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTO\Requests\**" />
+    <EmbeddedResource Remove="DTO\Requests\**" />
+    <None Remove="DTO\Requests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LoveLettersRepository\LoveLetters.Repository.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\Requests\" />
   </ItemGroup>
 
 </Project>
