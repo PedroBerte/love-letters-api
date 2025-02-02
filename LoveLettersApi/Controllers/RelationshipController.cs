@@ -15,13 +15,33 @@ namespace LoveLetters.WebApi.Controllers
             this.relationshipService = relationshipService;
         }
 
-        [HttpPost]
-        [Route("invitePartner")]
-        public async Task<ActionResult> InvitePartner(string guidInviter, string guidInvited)
+        [HttpGet]
+        [Route("invites")]
+        public async Task<ActionResult> GetInvitesByUser(string userGuid)
         {
             try
             {
-                return Ok(await relationshipService.InvitePartner(guidInviter, guidInvited));
+                return Ok(await relationshipService.GetInvitesByUser(userGuid));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new DefaultResponse<object>
+                {
+                    Code = 500,
+                    Message = "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
+                    Data = null,
+                    Success = false
+                });
+            }
+        }
+
+        [HttpPost]
+        [Route("invitePartner")]
+        public async Task<ActionResult> InvitePartner(string inviterGuid, string invitedGuid)
+        {
+            try
+            {
+                return Ok(await relationshipService.InvitePartner(inviterGuid, invitedGuid));
             }
             catch (Exception ex)
             {
@@ -35,24 +55,24 @@ namespace LoveLetters.WebApi.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Route("acceptInvite")]
-        //public async Task<ActionResult> AcceptInvite(int inviteId)
-        //{
-        //    try
-        //    {
-        //        return Ok(await relationshipService.InvitePartner(inviteId));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new DefaultResponse<object>
-        //        {
-        //            Code = 500,
-        //            Message = "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
-        //            Data = null,
-        //            Success = false
-        //        });
-        //    }
-        //}
+        [HttpPost]
+        [Route("acceptInvite")]
+        public async Task<ActionResult> AcceptInvite(int inviteId)
+        {
+            try
+            {
+                return Ok(await relationshipService.AcceptInvite(inviteId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new DefaultResponse<object>
+                {
+                    Code = 500,
+                    Message = "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
+                    Data = null,
+                    Success = false
+                });
+            }
+        }
     }
 }

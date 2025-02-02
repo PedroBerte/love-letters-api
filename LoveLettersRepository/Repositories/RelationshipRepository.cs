@@ -18,6 +18,30 @@ namespace LoveLetters.Repository.Repositories
             _context = context;
         }
 
+        public async Task<List<Invites>> GetInvites(string userGuid)
+        {
+            try
+            {
+                return await _context.Invites.Where(x => x.guidInviter == userGuid || x.guidInvited == userGuid).ToListAsync();
+            }
+            catch (DbException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Invites> GetInvite(int id)
+        {
+            try
+            {
+                return await _context.Invites.FirstOrDefaultAsync(x => x.id == id);
+            }
+            catch (DbException)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Invites>> GetInvite(string guidInviter, string guidInvited)
         {
             try
@@ -40,8 +64,7 @@ namespace LoveLetters.Repository.Repositories
                 {
                     guidInviter = guidInviter,
                     guidInvited = guidInvited,
-                    inviteAccepted = false,
-                    inviteRejected = false,
+                    inviteStatus = "SD", //domain ->  send
                     inviteDate = DateTime.Now
                 };
 
@@ -49,6 +72,29 @@ namespace LoveLetters.Repository.Repositories
                 await _context.SaveChangesAsync();
 
                 return invite.Entity;
+            }
+            catch (DbException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Invites> AcceptInvite(int inviteId)
+        {
+            try
+            {
+                var invite = await _context.Invites.FirstOrDefaultAsync(x => x.id == inviteId);
+
+                if (invite is null)
+                    throw new Exception("Convite não encontrado.");
+
+                invite.inviteStatus = "AC";
+                invite.inviteUpdateDate = DateTime.Now;
+
+                _context.Invites.Add(invite);
+                await _context.SaveChangesAsync();
+
+                return invite;
             }
             catch (DbException)
             {

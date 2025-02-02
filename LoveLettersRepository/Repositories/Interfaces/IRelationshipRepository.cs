@@ -11,5 +11,7 @@ namespace LoveLetters.Repository.Repositories.Interfaces
     {
         Task<List<Invites>> GetInvite(string guidInviter, string guidInvited);
         Task<Invites> InsertInvite(string guidInviter, string guidInvited);
+        Task<Invites> AcceptInvite(int inviteId);
+        Task<List<Invites>> GetInvites(string userGuid);
     }
 }

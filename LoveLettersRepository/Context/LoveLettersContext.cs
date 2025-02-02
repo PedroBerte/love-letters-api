@@ -12,6 +12,7 @@ namespace LoveLetters.Repository.Context
         public DbSet<Users> Users { get; set; }
         public DbSet<Invites> Invites { get; set; }
         public DbSet<Relationship> Relationship { get; set; }
+        public DbSet<Domains> Domains { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,9 @@ namespace LoveLetters.Repository.Context
 
             modelBuilder.Entity<Invites>()
             .HasKey(u => u.id);
+
+            modelBuilder.Entity<Domains>()
+                .HasKey(u => u.id);
         }
     }
 
@@ -44,8 +48,7 @@ namespace LoveLetters.Repository.Context
     public class Invites
     {
         public int id { get; set; }
-        public bool inviteAccepted { get; set; }
-        public bool inviteRejected { get; set; }    
+        public string inviteStatus { get; set; }
         public DateTime? inviteUpdateDate { get; set; }
         public DateTime inviteDate { get; set; }
         public string guidInvited { get; set; }
@@ -61,4 +64,13 @@ namespace LoveLetters.Repository.Context
         public DateTime startDate { get; set; }
         public DateTime? endDate { get; set; }
     }
+
+    public class Domains
+    {
+        public int id { get; set; }
+        public string cod_domain { get; set; }
+        public string dcr_sub_domain { get; set; }
+        public string cod_sub_domain { get; set; }
+    }
+
 }

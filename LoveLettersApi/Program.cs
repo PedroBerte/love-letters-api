@@ -28,11 +28,14 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 #region services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRelationshipService, RelationshipService>();
 #endregion
 
 #region repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IRelationshipRepository, RelationshipRepository>();
+builder.Services.AddScoped<IDomainRepository, DomainRepository>();
 #endregion
 
 builder.WebHost.ConfigureKestrel(options =>
